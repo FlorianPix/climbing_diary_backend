@@ -1,1 +1,1 @@
-# climbing_diary_backend
+# Climbing diary backend
