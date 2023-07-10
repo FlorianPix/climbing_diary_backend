@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     environment: str = "dev"
     testing: bool = bool(0)
     database_url: AnyUrl = None
+    AUTH0_DOMAIN: str = "climbing-diary.eu.auth0.com"
+    AUTH0_API_AUDIENCE: str = "climbing-diary-API"
 
 
 @lru_cache()
