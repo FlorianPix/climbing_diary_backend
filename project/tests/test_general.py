@@ -3,7 +3,7 @@ def test_no_token(test_app_with_db):
     # test_app_with_db
 
     # When any request is sent without a bearer token
-    response = test_app_with_db.get("/summaries/")
+    response = test_app_with_db.get("/trip/")
 
     # Then a 403 Forbidden HTTPError should be the response with the "missing bearer token" detail
     assert response.status_code == 403
