@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi_auth0 import Auth0User
 
-from app.api import trip_crud
+from app.crud import trip_crud
 from app.auth import auth
 
 from app.models.trip import TripSchema, CreateTripSchema, UpdateTripSchema
