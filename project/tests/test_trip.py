@@ -3,26 +3,24 @@ from fastapi import Security
 from fastapi_auth0 import Auth0User
 from app.auth import auth
 
+test_trip = {
+    "comment": "Great trip",
+    "end_date": "2022-10-08",
+    "name": "Ausflug zum Falkenstein",
+    "start_date": "2022-10-06",
+    "rating": 5,
+}
+
 
 def test_create_trip(test_app_with_db, headers):
     response = test_app_with_db.post(
         "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers
     )
 
     assert response.status_code == 201
     response_dict = response.json()
-    assert response_dict["media_ids"] == []
-    assert response_dict["spot_ids"] == []
     assert response_dict["comment"] == "Great trip"
     assert response_dict["end_date"] == "2022-10-08"
     assert response_dict["name"] == "Ausflug zum Falkenstein"
@@ -62,15 +60,7 @@ def test_create_trip_invalid_json(test_app, headers):
 def test_read_trip(test_app_with_db, headers):
     response = test_app_with_db.post(
         "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers
     )
     trip_id = response.json()["id"]
@@ -80,8 +70,6 @@ def test_read_trip(test_app_with_db, headers):
 
     response_dict = response.json()
     assert response_dict["id"] == trip_id
-    assert response_dict["media_ids"] == []
-    assert response_dict["spot_ids"] == []
     assert response_dict["comment"] == "Great trip"
     assert response_dict["end_date"] == "2022-10-08"
     assert response_dict["name"] == "Ausflug zum Falkenstein"
@@ -99,15 +87,7 @@ def test_read_trip_incorrect_id(test_app_with_db, headers):
 def test_read_all_trips(test_app_with_db, headers):
     response = test_app_with_db.post(
         "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers
     )
     trip_id = response.json()["id"]
@@ -120,26 +100,12 @@ def test_read_all_trips(test_app_with_db, headers):
 
 
 def test_update_trip(test_app_with_db, headers):
-    response = test_app_with_db.post(
-        "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
-        headers=headers
-    )
+    response = test_app_with_db.post("/trip/", data=json.dumps(test_trip), headers=headers)
     trip_id = response.json()["id"]
 
     response = test_app_with_db.put(
         f"/trip/{trip_id}/",
         data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
             "comment": "Great trip",
             "end_date": "2022-10-08",
             "name": "Ausflug zum Falkenstein updated",
@@ -159,15 +125,7 @@ def test_update_trip_incorrect_id(test_app_with_db, headers):
     id = 999
     response = test_app_with_db.put(
         f"/trip/{id}/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein updated",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers,
     )
     assert response.status_code == 404
@@ -177,15 +135,7 @@ def test_update_trip_incorrect_id(test_app_with_db, headers):
 def test_update_trip_empty_json(test_app_with_db, headers):
     response = test_app_with_db.post(
         "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers,
     )
     trip_id = response.json()["id"]
@@ -198,8 +148,6 @@ def test_update_trip_empty_json(test_app_with_db, headers):
     assert response.status_code == 200
     response_dict = response.json()
     assert response_dict["id"] == trip_id
-    assert response_dict["media_ids"] == []
-    assert response_dict["spot_ids"] == []
     assert response_dict["comment"] == "Great trip"
     assert response_dict["end_date"] == "2022-10-08"
     assert response_dict["name"] == "Ausflug zum Falkenstein"
@@ -210,15 +158,7 @@ def test_update_trip_empty_json(test_app_with_db, headers):
 def test_update_trip_invalid_keys(test_app_with_db, headers):
     response = test_app_with_db.post(
         "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers
     )
     trip_id = response.json()["id"]
@@ -231,8 +171,6 @@ def test_update_trip_invalid_keys(test_app_with_db, headers):
     assert response.status_code == 200
     response_dict = response.json()
     assert response_dict["id"] == trip_id
-    assert response_dict["media_ids"] == []
-    assert response_dict["spot_ids"] == []
     assert response_dict["comment"] == "Great trip"
     assert response_dict["end_date"] == "2022-10-08"
     assert response_dict["name"] == "Ausflug zum Falkenstein"
@@ -244,15 +182,7 @@ def test_update_trip_invalid_keys(test_app_with_db, headers):
 def test_delete_trip(test_app_with_db, headers):
     response = test_app_with_db.post(
         "/trip/",
-        data=json.dumps({
-            "media_ids": [],
-            "spot_ids": [],
-            "comment": "Great trip",
-            "end_date": "2022-10-08",
-            "name": "Ausflug zum Falkenstein",
-            "start_date": "2022-10-06",
-            "rating": 5,
-        }),
+        data=json.dumps(test_trip),
         headers=headers
     )
     trip_id = response.json()["id"]
@@ -263,8 +193,6 @@ def test_delete_trip(test_app_with_db, headers):
     assert response.status_code == 200
     response_dict = response.json()
     assert response_dict["id"] == trip_id
-    assert response_dict["media_ids"] == []
-    assert response_dict["spot_ids"] == []
     assert response_dict["comment"] == "Great trip"
     assert response_dict["end_date"] == "2022-10-08"
     assert response_dict["name"] == "Ausflug zum Falkenstein"

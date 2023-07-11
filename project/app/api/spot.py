@@ -15,7 +15,6 @@ router = APIRouter()
 @router.post("/", response_model=SpotSchema, status_code=201, dependencies=[Depends(auth.implicit_scheme)])
 async def create_spot(payload: CreateSpotSchema, user: Auth0User = Security(auth.get_user, scopes=["write:diary"])) -> SpotSchema:
     spot = await spot_crud.post(payload, user)
-
     response_object = spot
     return response_object
 
@@ -48,6 +47,7 @@ async def delete_spot(id: int, user: Auth0User = Security(auth.get_user, scopes=
     if not spot:
         raise HTTPException(status_code=404, detail=f"Spot {id} not found")
     await spot_crud.delete(id)
+
     return spot
 
 

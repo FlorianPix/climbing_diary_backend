@@ -7,12 +7,8 @@ from fastapi_auth0 import Auth0User
 
 async def post(payload: CreateSpotSchema, user: Auth0User) -> int:
     spot = Spot(
-        media_ids=[],
-        single_pitch_route_ids=[],
-        multi_pitch_route_ids=[],
         user_id=user.id,
         comment=payload.comment,
-        coordinates=payload.coordinates,
         distance_parking=payload.distance_parking,
         distance_public=payload.distance_public,
         location=payload.location,

@@ -7,8 +7,6 @@ from fastapi_auth0 import Auth0User
 
 async def post(payload: CreateTripSchema, user: Auth0User) -> int:
     trip = Trip(
-        media_ids=[],
-        spot_ids=[],
         user_id=user.id,
         comment=payload.comment,
         end_date=payload.end_date,
