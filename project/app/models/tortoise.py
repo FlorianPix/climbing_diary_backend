@@ -18,3 +18,24 @@ class Trip(models.Model):
 
 
 TripSchema = pydantic_model_creator(Trip)
+
+
+class Spot(models.Model):
+    media_ids = fields.JSONField()
+    single_pitch_route_ids = fields.JSONField()
+    multi_pitch_route_ids = fields.JSONField()
+    user_id = fields.TextField()
+
+    comment = fields.TextField()
+    coordinates = fields.JSONField()
+    distance_parking = fields.IntField()
+    distance_public = fields.IntField()
+    location = fields.TextField()
+    name = fields.TextField()
+    rating = fields.IntField()
+
+    def __str__(self):
+        return self.name
+
+
+SpotSchema = pydantic_model_creator(Spot)

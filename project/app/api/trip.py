@@ -6,7 +6,8 @@ from fastapi_auth0 import Auth0User
 from app.crud import trip_crud
 from app.auth import auth
 
-from app.models.trip import TripSchema, CreateTripSchema, UpdateTripSchema
+from app.models.trip import CreateTripSchema, UpdateTripSchema
+from app.models.tortoise import TripSchema
 
 router = APIRouter()
 

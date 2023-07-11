@@ -1,7 +1,7 @@
 from typing import List, Optional, Union
 
-from app.models.trip import CreateTripSchema, TripSchema, UpdateTripSchema
-from app.models.tortoise import Trip
+from app.models.trip import CreateTripSchema, UpdateTripSchema
+from app.models.tortoise import Trip, TripSchema
 from fastapi_auth0 import Auth0User
 
 

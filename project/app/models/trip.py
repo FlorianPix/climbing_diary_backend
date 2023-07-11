@@ -25,13 +25,6 @@ class CreateTripSchema(BaseModel):
         }
 
 
-class TripSchema(CreateTripSchema):
-    media_ids: List[UUID] = []
-    spot_ids: List[UUID] = []
-    id: int
-    user_id: str = Field(...)
-
-
 class UpdateTripSchema(BaseModel):
     media_ids: Optional[tuple]
     spot_ids: Optional[tuple]
